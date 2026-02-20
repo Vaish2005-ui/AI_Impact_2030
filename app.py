@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load data
-df = pd.read_csv("AI_Impact_on_Jobs_2030.csv")
+df = pd.read_csv("data/AI_Impact_on_Jobs_2030.csv")
 
 st.title("Will Your Career Survive AI by 2030?")
 
@@ -23,6 +23,13 @@ st.metric(
     len(high_risk)
 )
 
+if risk_threshold > 0.7:
+    st.error("⚠ High Risk Threshold Selected — Significant Automation Exposure")
+elif risk_threshold > 0.4:
+    st.warning("Moderate Automation Risk Zone")
+else:
+    st.success("Low Automation Risk Zone")
+
 # Show distribution
 fig, ax = plt.subplots()
 ax.hist(df["Automation_Probability_2030"], bins=30)
@@ -37,16 +44,9 @@ df["Future_Stability_Score"] = (
     (1 - df["Automation_Probability_2030"]) * 0.6 +
     df["Tech_Growth_Factor"] * 0.4
 )
-if risk_threshold > 0.7:
-    st.error("⚠ High Risk Threshold Selected — Significant Automation Exposure")
-elif risk_threshold > 0.4:
-    st.warning("Moderate Automation Risk Zone")
-else:
-    st.success("Low Automation Risk Zone")
 
 st.subheader("Top 5 Most Future-Stable Profiles")
 st.dataframe(
     df.sort_values("Future_Stability_Score", ascending=False)
       .head(5)
 )
-
