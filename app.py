@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load data
-df = pd.read_csv("data/AI_Impact_on_Jobs_2030.csv")
+df = pd.read_csv("AI_Impact_on_Jobs_2030.csv")
 
 st.title("Will Your Career Survive AI by 2030?")
 
@@ -49,3 +49,4 @@ st.dataframe(
     df.sort_values("Future_Stability_Score", ascending=False)
       .head(5)
 )
+
